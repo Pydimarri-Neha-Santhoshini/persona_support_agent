@@ -1,0 +1,10 @@
+Subscription Billing and Refund Policy
+
+1. Billing Cycle
+Subscribers are billed on a recurring monthly cycle starting from the day of signup. For example, if you register on June 15, your card will be charged on the 15th of each subsequent month.
+
+2. Duplicate Charges
+If you notice duplicate charges on your statement, it is typically due to temporary authorization holds. If two finalized charges appear for the same billing date, contact the finance team immediately.
+
+3. Refund Requests
+Refunds are eligible only if requested within 7 days of the initial subscription charge. Additionally, API credit usage must be below 10% of the monthly quota. Refund requests can be initiated by emailing billing@adsparkx.com.

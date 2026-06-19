@@ -1,0 +1,9 @@
+API Rate Limiting Policy
+
+1. Limits by Tier
+- Free Plan: 60 requests per minute (RPM).
+- Developer Plan: 300 RPM.
+- Enterprise Plan: Custom thresholds up to 10,000 RPM.
+
+2. Handling Rate Limit Errors
+When your request rate exceeds the threshold, the API returns a status code of '429 Too Many Requests'. The response header includes 'Retry-After' which details the number of seconds you must wait before sending another request.

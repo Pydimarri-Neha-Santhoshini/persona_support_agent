@@ -1,0 +1,25 @@
+# Virtual environments (do not push packages to github)
+venv/
+.venv/
+ENV/
+
+# Local cache and bytecode
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+
+# Local Vector Database (automatically regenerated on startup)
+chroma_db/
+
+# Local credentials / environment variables (do NOT leak your API keys)
+.env
+
+# Streamlit config and state
+.streamlit/
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db

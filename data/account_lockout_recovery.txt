@@ -1,0 +1,86 @@
+Account Lockout and Security Recovery Guide
+
+## Overview
+To protect user accounts from unauthorized access, automated credential stuffing attacks, and brute-force intrusions, Adsparkx implements a strict automated security lockout policy. When an account is locked, administrative and user access is suspended across the main console and all API endpoints. This document outlines the symptoms, root causes, self-service unlock steps, MFA recovery scenarios, and administrative verification procedures to safely restore account access.
+
+This guide is designed for both workspace members seeking to recover their active accounts and workspace administrators managing access for their team members. Ensuring high security during the recovery phase is essential, and this document details the exact protocols necessary.
+
+## Symptoms
+If your account has been locked due to security protocols, you will observe the following symptoms:
+1. **Console Login Alert**: Attempts to log in through the Adsparkx web console will result in a red warning message: "Account Locked: Maximum failed login attempts reached. Your access is temporarily restricted for 30 minutes."
+2. **API Status**: API requests using user session cookies or administrative credentials will return an `HTTP 403 Forbidden` response code with the body message: "error: account_locked".
+3. **Recovery Email Trigger**: An automated security notification is sent to the registered email address with the subject line "Adsparkx Security Alert: Account Temporarily Locked". This email contains the timestamp of the lock, the originating IP address, and a direct link to initiate a self-service password reset.
+4. **Log Entries**: Security logs in your workspace settings will show a warning: "Auth Failure - Max login attempts exceeded for user: account_email@domain.com".
+
+## Common Causes
+Account lockouts typically occur due to:
+* **Max Failed Login Attempts**: Entering incorrect passwords five consecutive times within a 15-minute window.
+* **Autofill Password Sync Errors**: Stale credentials saved in your browser's auto-fill settings or local password manager trying to log in automatically behind the scenes. This is the most common cause of locks during credential updates.
+* **MFA Device Loss**: Losing access to your Multi-Factor Authentication (MFA) device, making it impossible to complete the second stage of login.
+* **Suspicious Location Flags**: Accessing the platform from a blacklisted IP range or country, triggering automated protective blocks.
+* **API Inbound Flooding**: A legacy development script executing credentials in a loop without proper key authentication.
+
+## Troubleshooting Steps
+
+### Step 1: Self-Service Password Reset
+The quickest way to bypass a temporary 30-minute lock is to initiate a password reset. A successful password update overrides active login locks immediately.
+1. Go to the login page and click "Forgot Password".
+2. Enter your registered email address and click "Send Link".
+3. Open the password recovery email and follow the secure link.
+4. Input your new password. Ensure it meets the security complexity rules: at least 12 characters, including one uppercase letter, one number, and one special character (e.g., @, #, $, %).
+5. Click "Confirm" to save the changes.
+6. Log in using your new credentials.
+
+### Step 2: Clear Browser Cache and Autofill Settings
+To prevent autofill forms from triggering another lockout:
+1. Open your browser settings and navigate to the Saved Passwords panel.
+2. Find any outdated entries for "adsparkx.com" and delete or update them.
+3. Clear your browser cache and cookies, then reload the login page.
+4. Ensure no background tabs are making silent requests.
+
+### Step 3: MFA Device Recovery Workflow
+If you have lost access to your Google Authenticator or primary MFA app:
+1. On the MFA input page, click "Use Backup Recovery Code".
+2. Locate the 16-character backup code saved during your initial MFA registration.
+3. Enter the code and click "Verify". Note that each backup code is single-use only.
+4. Once logged in, navigate to **Settings > Security > MFA** and register a new authenticator device. Make sure to download a new set of backup codes immediately.
+
+### Step 4: Administrator Manual Unlock
+If the locked account belongs to a team member, Workspace Administrators can bypass the cooldown lock manually:
+1. Log in to the Adsparkx Portal using Owner/Admin credentials.
+2. Go to **Workspace Management > Members**.
+3. Search for the user by name or email.
+4. Click on the three dots icon next to their name and select "Unlock Account".
+5. The user will be sent a confirmation email, and the lock is removed instantly.
+
+## Resolution
+* **Automatic Expiration**: If you do not request a password reset, the brute-force lock will automatically expire exactly 30 minutes after the last failed login attempt.
+* **Manual Reset**: Completing a secure password reset clears the failed attempt counter and resets account flags.
+* **Admin Verification**: If you lack backup recovery codes and do not have access to your email, contact your workspace Administrator to request an account state reset.
+
+## Best Practices
+* **Keep Backup Codes Secure**: Always save your MFA recovery codes in a secure, offline location (such as a hardware safe or encrypted vaults).
+* **Separate Integration Users**: Never use main administrative logins inside scripts. Deploy dedicated API keys for automated backend requests.
+* **Enable SSO**: For enterprise workspaces, configure Single Sign-On (SSO) with your corporate identity provider (SAML/OIDC) to centralize login security.
+* **Session Expiration**: Set an idle session timeout of 4 hours to ensure shared workstations are automatically logged out.
+
+## Frequently Asked Questions
+
+### Q: Does the lockout affect active API integration keys?
+No. To prevent critical service interruptions, active API keys (Bearer tokens) deployed in production will continue to function normally during a standard console account lockout. Only interactive portal logins are locked.
+
+### Q: I did not receive my password reset link. What should I do?
+First, check your Spam, Social, and Promotions folders. Ensure your network firewall does not block SMTP mail from "no-reply@adsparkx.com". If the issue persists, wait for the 30-minute lockout to expire and request another code.
+
+### Q: What if I lose access to both my primary MFA device and my backup codes?
+If all recovery methods are lost, you must contact our Enterprise Support team for offline identity verification. For security compliance, we do not bypass MFA based solely on email requests.
+
+## Escalation Conditions
+Escalate the account ticket to the Human Support Team if:
+1. You have lost both your MFA device and your 16-character backup recovery codes.
+2. You did not initiate the failed login attempts and suspect a coordinated credential attack.
+3. The account remains locked after the 30-minute cooling-off window has elapsed and password resets fail.
+To escalate, you must provide your account email address, corporate domain name, and a copy of your billing reference ID (last invoice number) for verification.
+
+## Additional Notes
+Workspace administrators can manually unlock team member profiles instantly from the **Workspace Management > Members** tab, bypassing the 30-minute cooling window.

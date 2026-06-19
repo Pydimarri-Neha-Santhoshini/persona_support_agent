@@ -1,0 +1,10 @@
+Clearing Cookies and Browser Cache
+
+To resolve performance lag or visual bugs in the main dashboard:
+1. Open Google Chrome.
+2. Click the three dots menu at the top-right corner.
+3. Select 'Delete browsing data...' or press Ctrl+Shift+Delete.
+4. Set the Time Range to 'All time'.
+5. Check the boxes next to 'Cookies and other site data' and 'Cached images and files'.
+6. Click 'Delete data' or 'Clear data'.
+7. Refresh the page to reload assets.

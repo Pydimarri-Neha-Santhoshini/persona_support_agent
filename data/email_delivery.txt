@@ -1,0 +1,7 @@
+Email Notification and SMTP Configuration
+
+If notifications or invitation emails are not reaching users, verify the following:
+1. Default SMTP Server Host: mail.smtp.adsparkx.com on port 587.
+2. Secure connection setup requires TLS.
+3. Verify that the SPF (Sender Policy Framework) and DKIM keys are correctly published on your DNS manager.
+4. Ensure target addresses are not placed on the global unsubscribed bounce list.
