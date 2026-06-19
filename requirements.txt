@@ -4,3 +4,4 @@ chromadb>=0.4.22
 pypdf>=3.17.0
 python-dotenv>=1.0.0
 langchain-text-splitters>=0.0.1
+protobuf<5.0.0
